@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eco-Rastreadvel: Do Campo ao Prato</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Kalam:wght@400;700&family=Permanent+Marker&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --comic-green: #14532d;
+            --comic-blue: #0369a1;
+            --paper: #f8fafc;
+        }
+
+        body {
+            background-color: #064e3b;
+            font-family: 'Kalam', cursive;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .main-wrapper {
+            width: 100%;
+            max-width: 1000px;
+        }
+
+        .comic-container {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background-color: var(--paper);
+            border: 8px solid #000;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .page {
+            position: absolute;
+            inset: 0;
+            display: none;
+            padding: 0;
+            animation: pageIn 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .page.active {
+            display: flex;
+        }
+
+        @keyframes pageIn {
+            from { opacity: 0; transform: scale(1.05); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .panel-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            grid-template-rows: repeat(6, 1fr);
+            width: 100%;
+            height: 100%;
+            gap: 8px;
+            background: #000;
+            padding: 8px;
+        }
+
+        .comic-panel {
+            background-color: #e2e8f0;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .comic-panel img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        /* Elementos Narrativos */
+        .caption {
+            position: absolute;
+            background: #fff;
+            border: 2px solid #000;
+            padding: 10px 15px;
+            font-family: 'Permanent Marker', cursive;
+            font-size: 0.95rem;
+            box-shadow: 4px 4px 0px #000;
+            z-index: 30;
+            max-width: 80%;
+        }
+
+        .bubble {
+            position: absolute;
+            background: #fff;
+            border: 2px solid #000;
+            border-radius: 50% / 30%;
+            padding: 15px;
+            font-weight: bold;
+            text-align: center;
+            z-index: 40;
+            max-width: 220px;
+            box-shadow: 2px 2px 0px rgba(0,0,0,0.2);
+            font-size: 0.9rem;
+        }
+
+        .bubble::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            border-width: 15px 10px 0;
+            border-style: solid;
+            border-color: #000 transparent;
+            transform: translateX(-50%);
+        }
+
+        .nav-bar {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .btn {
+            background: #facc15;
+            border: 4px solid #000;
+            padding: 12px 40px;
+            font-family: 'Bangers', cursive;
+            font-size: 1.8rem;
+            cursor: pointer;
+            box-shadow: 6px 6px 0px #000;
+            transition: all 0.1s;
+        }
+
+        .btn:active {
+            transform: translate(3px, 3px);
+            box-shadow: 3px 3px 0px #000;
+        }
+
+        .loading-spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border-left-color: #14532d;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+
+    <div class="main-wrapper">
+        <div class="comic-container">
+            
+            <!-- Capa -->
+            <div class="page active" id="p0">
+                <div class="panel-grid">
+                    <div class="comic-panel col-span-12 row-span-6" id="img-p0">
+                        <div class="flex flex-col items-center justify-center text-center p-10 bg-black/50 w-full h-full z-10">
+                            <h1 class="text-7xl text-white font-bold family-bangers drop-shadow-lg uppercase">Portal Eco-Rastreável</h1>
+                            <div class="bg-green-600 border-4 border-black p-4 mt-6 rotate-1">
+                                <p class="text-2xl font-bold text-white uppercase">Uma Jornada de Tecnologia e Sustentabilidade</p>
+                            </div>
+                            <div class="mt-8 max-w-2xl bg-white/90 p-4 border-2 border-black">
+                                <p class="text-lg font-bold">Já pensou de onde vem o que você come? Vamos explorar o caminho do grão ao seu prato!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Página 1: O Campo e o Manejo -->
+            <div class="page" id="p1">
+                <div class="panel-grid">
+                    <div class="comic-panel col-span-8 row-span-6" id="img-p1-a">
+                        <div class="caption top-4 left-4">O CAMPO: ONDE O FUTURO É PLANTADO.</div>
+                        <div class="bubble bottom-10 right-4">O manejo responsável do solo garante que a terra continue fértil por gerações.</div>
+                    </div>
+                    <div class="comic-panel col-span-4 row-span-3" id="img-p1-b">
+                        <div class="bubble top-4 left-4">Cada semente é escolhida para otimizar recursos naturais.</div>
+                    </div>
+                    <div class="comic-panel col-span-4 row-span-3" id="img-p1-c">
+                        <div class="caption bottom-4 right-4 text-xs">RESPEITO AO MEIO AMBIENTE.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Página 2: Inovação e Monitoramento -->
+            <div class="page" id="p2">
+                <div class="panel-grid">
+                    <div class="comic-panel col-span-6 row-span-3" id="img-p2-a">
+                        <div class="caption top-4 left-4">A TECNOLOGIA É A NOSSA ALIADA.</div>
+                    </div>
+                    <div class="comic-panel col-span-6 row-span-3" id="img-p2-b">
+                        <div class="bubble top-10 right-4">Drones e sensores monitoram a saúde da safra em tempo real!</div>
+                    </div>
+                    <div class="comic-panel col-span-12 row-span-3" id="img-p2-c">
+                        <div class="bubble bottom-10 left-10">Isso reduz desperdícios de água e insumos, criando um ciclo eficiente.</div>
+                        <div class="caption bottom-4 right-4">RASTREABILIDADE DIGITAL.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Página 3: Rastreabilidade e Transparência -->
+            <div class="page" id="p3">
+                <div class="panel-grid">
+                    <div class="comic-panel col-span-7 row-span-6" id="img-p3-a">
+                        <div class="caption top-4 left-4">DA INDÚSTRIA AO CONSUMIDOR.</div>
+                        <div class="bubble bottom-10 left-10">O QR Code revela a identidade de quem produziu e como produziu.</div>
+                    </div>
+                    <div class="comic-panel col-span-5 row-span-3" id="img-p3-b">
+                        <div class="bubble top-4 right-4">Segurança alimentar baseada em dados reais e transparentes.</div>
+                    </div>
+                    <div class="comic-panel col-span-5 row-span-3" id="img-p3-c">
+                        <div class="caption bottom-4 right-4 text-xs">VALOR AGREGADO AO GRÃO.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Página 4: O Impacto na Sociedade -->
+            <div class="page" id="p4">
+                <div class="panel-grid">
+                    <div class="comic-panel col-span-12 row-span-6" id="img-p4">
+                        <div class="flex flex-col items-center justify-end h-full p-10 w-full bg-gradient-to-t from-black/80 to-transparent z-10">
+                            <h2 class="text-5xl text-yellow-400 font-bold family-bangers leading-none mb-4 uppercase">Equilíbrio para o Futuro</h2>
+                            <p class="text-2xl text-white font-bold uppercase text-center max-w-3xl">
+                                Quando você escolhe um alimento rastreável, você valoriza o trabalho consciente e preserva o planeta.
+                            </p>
+                            <div class="mt-6 bg-white border-4 border-black p-3">
+                                <span class="text-lg font-black italic">ESTAMOS CONECTADOS. DO CAMPO AO PRATO!</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="nav-bar">
+            <button class="btn" id="prevBtn" onclick="changePage(-1)" style="visibility: hidden">VOLTAR</button>
+            <button class="btn" id="nextBtn" onclick="changePage(1)">AVANÇAR</button>
+        </div>
+    </div>
+
+    <script>
+        const apiKey = "";
+        let current = 0;
+        const total = 4;
+        const generatedImages = new Set();
+
+        const prompts = {
+            "img-p0": "A professional digital painting of a high-tech agricultural landscape. Blue skies, lush green fields, digital hexagonal patterns floating in the air symbolizing data. Modern and inspiring style.",
+            "img-p1-a": "Digital painting of a diverse farm with traditional crops and modern sensors. Golden hour lighting, focus on a healthy soil and green sprouts. Realistic comic art style.",
+            "img-p1-b": "Close-up of hands planting a sapling in rich soil, digital icons representing 'sustainable' and 'eco-friendly' hovering near the plant. High-end comic style.",
+            "img-p1-c": "A modern tractor with integrated GPS and sensors working on a vast green field during a sunny morning. Sharp and realistic.",
+            "img-p2-a": "A high-tech farm office with glowing holographic maps of fields, data points on crop health. A scientist in an agricultural vest looking at the screens.",
+            "img-p2-b": "A drone flying over a field with a digital scan beam checking the health of the plants. Realistic painting style, bright daylight.",
+            "img-p2-c": "A person using a smartphone to scan a QR code on a wooden crate of fresh produce in a farm field. Visual digital connection lines between them.",
+            "img-p3-a": "A modern food processing plant, clean environment, robotic arms sorting high-quality grains. Professional and safe industrial aesthetic.",
+            "img-p3-b": "A scientist in a lab looking at a sample of grain under a digital microscope that shows origin data on a side screen. High detail.",
+            "img-p3-c": "Boxes of fresh, organic products ready for delivery, with a visible label that says 'Eco-Rastreadvel'. Realistic storehouse setting.",
+            "img-p4": "A warm and inviting scene of a family sharing a fresh meal around a sunlit table. In the background through a window, a beautiful green farm field. Peace and harmony."
+        };
+
+        async function generateImage(elementId, promptText) {
+            if (generatedImages.has(elementId)) return;
+            const container = document.getElementById(elementId);
+            container.innerHTML = '<div class="loading-spinner"></div>';
+            let retries = 0;
+            const maxRetries = 5;
+            while (retries < maxRetries) {
+                try {
+                    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/imagen-4.0-generate-001:predict?key=${apiKey}`, {
+                        method: 'POST',
+                        body: JSON.stringify({
+                            instances: [{ prompt: promptText }],
+                            parameters: { sampleCount: 1 }
+                        })
+                    });
+                    if (!response.ok) throw new Error('Generation failed');
+                    const result = await response.json();
+                    const imageUrl = `data:image/png;base64,${result.predictions[0].bytesBase64Encoded}`;
+                    container.innerHTML = `<img src="${imageUrl}" alt="Cena">`;
+                    generatedImages.add(elementId);
+                    return;
+                } catch (error) {
+                    retries++;
+                    const delay = Math.pow(2, retries) * 1000;
+                    await new Promise(res => setTimeout(res, delay));
+                }
+            }
+            container.innerHTML = '<p class="text-xs p-2 text-red-500">Erro ao carregar.</p>';
+        }
+
+        function changePage(step) {
+            const pages = document.querySelectorAll('.page');
+            pages[current].classList.remove('active');
+            current = (current + step + (total + 1)) % (total + 1);
+            pages[current].classList.add('active');
+            updateNavigation();
+            loadPageImages();
+        }
+
+        function updateNavigation() {
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            prevBtn.style.visibility = current === 0 ? 'hidden' : 'visible';
+            nextBtn.innerText = current === total ? 'RECOMEÇAR' : 'AVANÇAR';
+        }
+
+        function loadPageImages() {
+            const activePage = document.querySelector('.page.active');
+            const panels = activePage.querySelectorAll('.comic-panel');
+            panels.forEach(panel => {
+                if (prompts[panel.id]) generateImage(panel.id, prompts[panel.id]);
+            });
+        }
+
+        window.onload = () => {
+            loadPageImages();
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowRight') changePage(1);
+                if (e.key === 'ArrowLeft' && current > 0) changePage(-1);
+            });
+        };
+    </script>
+</body>
+</html>
